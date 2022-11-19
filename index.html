@@ -6,14 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>facimotion</title>
 </head>
+<style>
+    #logo_img{
+        transform: scale(4, 4);
+        margin:0;
+        width: 50px;
+        animation: left_right 2s infinite;
+    }
+
+    @keyframes left_right {
+        from {transform: rotateY(20deg) scale(4, 4) ;}
+        to {transform: rotateY(-20deg) scale(4, 4) ;}
+    }
+</style>
 <body>
     <div>
-        <img src="logo.png" alt="" srcset="" width="50" style="transform: scale(4, 4);margin:0;">
+        <img src="logo.png" alt="" srcset="" id="logo_img">
         <h1>facimotion</h1>
     </div>
     
     <h3>donate a face for research and study purpose.</h3>
-    <form action="" enctype="multipart/form-data" method="post">
+    <form action="upload.php" enctype="multipart/form-data" method="post">
         <input type="file" name="image" id=""><br>
         <select name="emotion" id="">
             <option value="happy">happy</option>
