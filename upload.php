@@ -23,6 +23,7 @@
     // print_r($_FILES);               ///size in bytes
 
     $key = getenv('key') ?? file_get_contents('key');
+    // echo $key;
 
     // if()
     // echo $key;

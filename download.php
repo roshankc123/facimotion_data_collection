@@ -26,7 +26,7 @@
             }
             else{
                 include 'database.php';
-                $db = mysqli($conn, $username, $password, $database);
+                $db =  pg_connect("host=$conn port=5432 dbname=$database user=$username password=$password");;
             }
             
             for ($i=0; isset($emotions[$i]) ; $i++) { 
