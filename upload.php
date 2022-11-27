@@ -55,8 +55,7 @@
         $db = new SQLite3('database.sqlite');
     else{
         include 'database.php';
-
-        $db = mysqli($conn, $username, $password, $database);
+        $db =  pg_connect("host=$conn port=5432 dbname=$database user=$username password=$password");;
     }
         
     
