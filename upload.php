@@ -22,7 +22,7 @@
     // $image = $_POST['image'];
     // print_r($_FILES);               ///size in bytes
 
-    $key = file_get_contents('key');
+    $key = getenv('key') ?? file_get_contents('key');
 
     // if()
     // echo $key;
@@ -39,7 +39,7 @@
     // print_r($response);
     unset($data);
     if(!$response['data'])
-        die('error');
+        die('error with image uploading');
     
     // this is the order of data in database
     $data = [
