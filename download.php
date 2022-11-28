@@ -34,7 +34,7 @@
             }
             
             for ($i=0; isset($emotions[$i]) ; $i++) { 
-                echo get_data($db, $emotions[$i]);
+                // echo get_data($db, $emotions[$i]);
             }
             
         }
