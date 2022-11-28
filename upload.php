@@ -54,12 +54,7 @@
     if(getenv('DB') == null)
         $db = new SQLite3('database.sqlite');
     else{
-        $conn = getenv('DB_CONNECTION');
-        $username = getenv('DB_username');
-        $password = getenv('DB_password');
-        $database = getenv('DB_database');
-                // echo $conn.$username.$password.$database;
-        $db =  pg_connect("host=$conn port=5432 dbname=$database user=$username password=$password");;
+        $db =  pg_connect(getenv("DATABASE_URL"));
     }
         
     
