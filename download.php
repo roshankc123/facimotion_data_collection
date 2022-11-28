@@ -3,7 +3,7 @@
 <?php
 
     function get_data($db, $emotion){
-        $data = pg_query($db, 'select * from facimotion where emotion = "happy";');
+        $data = pg_query($db, 'select * from facimotion where emotion = \''.$emotion.'\';');
         print_r($data);
         if(!$data)
             return null;
@@ -29,11 +29,6 @@
             }
             else{
                 $db =  pg_connect(getenv("DATABASE_URL"));
-                print_r($db);
-                $data = pg_query($db, 'select * from facimotion where emotion = \'happy\'');
-        print_r($data);
-        echo 'fetching';
-        print_r(pg_fetch_all($data));
             }
             
             for ($i=0; isset($emotions[$i]) ; $i++) { 
