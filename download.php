@@ -30,7 +30,7 @@
             else{
                 $db =  pg_connect(getenv("DATABASE_URL"));
                 print_r($db);
-                $data = pg_query($db, 'select * from facimotion');
+                $data = pg_query($db, 'select * from facimotion where emotion="happy"');
         print_r($data);
         echo 'fetching';
         print_r(pg_fetch_all($data));
