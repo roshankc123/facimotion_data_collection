@@ -4,6 +4,8 @@
 
     function get_data($db, $emotion){
         $data = pg_query($db, 'select * from facimotion where emotion = "'.$emotion.'"');
+        if(!$data)
+            return null;
         $i = 0;
         $response = '';
         while($unit = pg_fetch_row($data)){
