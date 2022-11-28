@@ -29,6 +29,7 @@
             }
             else{
                 $db =  pg_connect(getenv("DATABASE_URL"));
+                print_r($db);
             }
             
             for ($i=0; isset($emotions[$i]) ; $i++) { 
