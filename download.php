@@ -3,7 +3,7 @@
 <?php
 
     function get_data($db, $emotion){
-        $data = pg_query($db, 'select * from facimotion where emotion = "'.$emotion.'"');
+        $data = pg_query($db, 'select * from facimotion where emotion = "happy');
         print_r($data);
         if(!$data)
             return null;
