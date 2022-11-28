@@ -3,10 +3,10 @@
 <?php
 
     function get_data($db, $emotion){
-        $data = $db->query('select * from facimotion where emotion = "'.$emotion.'"');
+        $data = pg_query($db, 'select * from facimotion where emotion = "'.$emotion.'"');
         $i = 0;
         $response = '';
-        while($unit = $data->fetchArray()){
+        while($unit = pg_fetch_row($data)){
             $response .= 'curl '.$unit['url'].' --output '.$emotion.'/image_'.$i.'.jpg<br>'; 
             $i++;
         }

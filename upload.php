@@ -61,7 +61,7 @@
 
     $values = "('".$data['url']."','".$data['size']."','".$data['width']."','".$data['height']."','".$data['emotion']."')";
 
-    if(!$db->query('insert into facimotion values'.$values))
+    if(!pg_query($db, 'insert into facimotion values'.$values))
         die('error with us');
 
 
