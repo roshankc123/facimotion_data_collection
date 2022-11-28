@@ -25,7 +25,7 @@
                 $db = new SQLite3('database.sqlite');
             }
             else{
-                $conn = getenv('DB_connecion');
+                $conn = getenv('DB_CONNECTION');
                 $username = getenv('DB_username');
                 $password = getenv('DB_password');
                 $database = getenv('DB_database');
