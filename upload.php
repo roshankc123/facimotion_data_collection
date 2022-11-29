@@ -22,7 +22,8 @@
     // $image = $_POST['image'];
     // print_r($_FILES);               ///size in bytes
 
-    $key = file_get_contents('key');
+    $key = getenv('key') ?? file_get_contents('key');
+    // echo $key;
 
     // if()
     // echo $key;
@@ -39,7 +40,7 @@
     // print_r($response);
     unset($data);
     if(!$response['data'])
-        die('error');
+        die('error with image uploading');
     
     // this is the order of data in database
     $data = [
@@ -50,11 +51,21 @@
         'emotion' => $_POST['emotion']
     ];          
 
-    $db = new SQLite3('database.sqlite');
+    if(getenv('DB') == null)
+        $db = new SQLite3('database.sqlite');
+    else{
+        $db =  pg_connect(getenv("DATABASE_URL"));
+    }
+        
+    
 
     $values = "('".$data['url']."','".$data['size']."','".$data['width']."','".$data['height']."','".$data['emotion']."')";
 
-    $db->query('insert into facimotion values'.$values);
+    if(!pg_query($db, 'insert into facimotion values'.$values))
+        die('error with us');
+
+
+    echo 'thanks for your support<a href="/index.html">home</a>';
     // $db->dba_insert()
 
     // print_r($data);
