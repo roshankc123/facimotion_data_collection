@@ -101,10 +101,11 @@ const doScreenshot = () => {
 
 const submitAction = async () => {
 
-  const src=screenshotImage.src
-
-  let formData = new FormData();
-  formData.append("image", src);
+  const src=screenshotImage.src.split(',')
+  const form = document.forms.namedItem('mainForm');
+  // console.log(form)
+  let formData = new FormData(form);
+  formData.append("image", src[1]);
   getData(formData)
 
   console.log("invoked")

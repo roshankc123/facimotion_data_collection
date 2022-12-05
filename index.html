@@ -73,8 +73,7 @@
                 <div class="col-12 col-md-4">
                     <img class="screenshot-image " alt="this is screenshot" >
 
-                    <form class="form-inline py-3" action="upload.php" enctype="multipart/form-data" method="post">
-                        <input type="file" class="form-control"  name="image" id="" />
+                    <form class="form-inline py-3" action="upload.php" enctype="multipart/form-data" method="post" name="mainForm">
                         <div class="form-group">
                             <label for="exampleFormControlSelect1" class="mt-5 bold" >Example select</label>
                             <select class="form-control" id="exampleFormControlSelect1"  name="emotion" id="" >
@@ -115,7 +114,7 @@
 console.log("hiii")
 $.ajax({
     type: "POST",
-    url: "script.php",
+    url: "upload.php",
     data: { 
        imgBase64: dataURL
     }

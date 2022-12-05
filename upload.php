@@ -10,6 +10,9 @@
         $headers = [
           'Accept: application/json',
           'User-Agent: http://'.$_SERVER['HTTP_HOST'],
+          "mimeType: multipart/form-data",
+          "processData: ".false,
+          "contentType: ".false,
         ];
        
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -21,26 +24,41 @@
 
     // $image = $_POST['image'];
     // print_r($_FILES);               ///size in bytes
-
-    $key = getenv('key') ?? file_get_contents('key');
+    if(getenv('key')){
+        echo 'env key';
+    }else{
+        $key = file_get_contents('key');
+    }
+    
     // echo $key;
+
+    // file_put_contents('/tmp/abc', $_POST['image']);
 
     // if()
     // echo $key;
     // print_r($key);
 
     $data = [
-        'name' => hash("md5", time()),
+        // 'name' => hash("md5", time()).'.png',
         'key' => $key,
-        'image' => base64_encode(file_get_contents($_FILES['image']['tmp_name']))
+        'image' => $_POST['image'],      ////base64_encode(file_get_contents($_POST['image']['tmp_name']))
+        // 'name' => 'temp.png',
     ];
+
+    // print_r($_POST['image']);
+    // str_split($_POST['image'], )
+    
 
     $response = apiRequest('https://api.imgbb.com/1/upload?', $data);
 
     // print_r($response);
     unset($data);
+    // print_r($response);
     if(!$response['data'])
-        die('error with image uploading');
+        die(json_encode([
+            'status' => 0,
+            'message' => 'error with image uploading',
+        ]));
     
     // this is the order of data in database
     $data = [
@@ -51,21 +69,35 @@
         'emotion' => $_POST['emotion']
     ];          
 
-    if(getenv('DB') == null)
-        $db = new SQLite3('database.sqlite');
-    else{
-        $db =  pg_connect(getenv("DATABASE_URL"));
+    include 'database.php';
+    // echo $db_type;
+        
+    $values = "('".$data['url']."','".$data['size']."','".$data['width']."','".$data['height']."','".$data['emotion']."')";
+    if($db_type == 'pgsql'){
+        if(!pg_query($db, 'insert into facimotion values'.$values)){
+            die(json_encode([
+                'status' => 0,
+                'message' => 'error with us',
+            ]));
+        }
+    }else{
+        if(!$db->query('insert into facimotion values'.$values)){
+            die(json_encode([
+                'status' => 0,
+                'message' => 'error with us',
+            ]));
+        }
+            
     }
         
-    
 
-    $values = "('".$data['url']."','".$data['size']."','".$data['width']."','".$data['height']."','".$data['emotion']."')";
-
-    if(!pg_query($db, 'insert into facimotion values'.$values))
-        die('error with us');
+        // print_r($db);
 
 
-    echo 'thanks for your support<a href="/index.html">home</a>';
+    echo json_encode([
+        'status' => 1,
+        'message' => 'thanks for the data',
+    ]);
     // $db->dba_insert()
 
     // print_r($data);

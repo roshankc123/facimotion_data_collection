@@ -2,16 +2,25 @@
 
 <?php
 
-    function get_data($db, $emotion){
-        $data = pg_query($db, 'select * from facimotion where emotion = \''.$emotion.'\';');
+    function get_data($db, $emotion, $db_type){
+        if($db_type == 'pgsql')
+            $data = pg_query($db, 'select * from facimotion where emotion = \''.$emotion.'\';');
+        else
+            $data = $db->query('select * from facimotion where emotion = \''.$emotion.'\';');
         if(!$data)
             return null;
         $i = 0;
         $response = '';
-        while($unit = pg_fetch_row($data)){
-            $response .= 'curl '.$unit['url'].' --output '.$emotion.'/image_'.$i.'.jpg<br>'; 
-            $i++;
-        }
+        if($db_type == 'pgsql')
+            while($unit = pg_fetch_row($data)){
+                $response .= 'curl '.$unit['url'].' --output '.$emotion.'/image_'.$i.'.jpg<br>'; 
+                $i++;
+            }
+        else
+            while($unit = $data->fetchArray()){
+                $response .= 'curl '.$unit['url'].' --output '.$emotion.'/image_'.$i.'.jpg<br>'; 
+                $i++;
+            }
         return $response;
     }
 
@@ -23,15 +32,11 @@
                 echo 'mkdir '.$emotions[$i].'<br>';
             }
             $curl = 'mkdir ';
-            if(getenv('DB') == null){
-                $db = new SQLite3('database.sqlite');
-            }
-            else{
-                $db =  pg_connect(getenv("DATABASE_URL"));
-            }
+
+            include 'database.php';
             
             for ($i=0; isset($emotions[$i]) ; $i++) { 
-                echo get_data($db, $emotions[$i]);
+                echo get_data($db, $emotions[$i], $db_type);
             }
             
         }
