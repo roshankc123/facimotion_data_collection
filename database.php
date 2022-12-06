@@ -2,6 +2,7 @@
     if(!getenv('DB_connection')){
         $db = new SQLite3('database.sqlite');
         $db_type = 'sqlite';
+        // $db->query('create table facimotion(url varchar(200), size bigint, width int, height int, emotion varchar(10))');
     }
     else{
         $conn = getenv('DB_connection');
