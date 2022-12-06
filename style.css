@@ -9,13 +9,23 @@ body{
     font-weight: bold;
 }
 
-.screenshot-image {
-    width: 150px;
-    height: 90px;
+
+.screenshot-div{
     border-radius: 4px;
     border: 2px solid whitesmoke;
     box-shadow: 0 1px 2px 0 rgba(105, 105, 105, 0.1);
-    background: rgb(223, 226, 223);
+    display: block;
+    overflow: hidden;
+    width: 150px;
+    height:100px;
+}
+
+.screenshot-image {
+    width:750px;
+    transform: scale(1.2);
+    border-radius: 4px;
+    border: 2px solid whitesmoke;
+    box-shadow: 0 1px 2px 0 rgba(105, 105, 105, 0.1);
     display: block;
 }
 
