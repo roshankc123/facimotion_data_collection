@@ -10,6 +10,11 @@ Original file is located at
 import cv2 as cv
 import os
 import numpy as np
+from datetime import datetime
+
+time = datetime.now()
+
+time = int(round(time.timestamp()))
 
 cascade = cv.CascadeClassifier('haarcascade_frontalface_alt2.xml')              #using haar cascade
 
@@ -44,7 +49,7 @@ for folder in Labels:
         status, frame = camera.read()
         #check if we get the frame or not
         if not status:
-            print("Frame is not been captured..Exiting...")
+            print("Frame has not been captured..Exiting...")
             break
         #convert the image into gray format for fast caculation
         gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
@@ -63,11 +68,12 @@ for folder in Labels:
 
             cropped = cv.resize(cropped, (48,48))               #resize into 48 by 48
 
+            #recheking to ensure face is present in photo
             face_2 = cascade.detectMultiScale(cropped, 1.1, 3)
-            print(len(face_2))
+            # print(len(face_2))
 
             if len(face_2):
-                cv.imwrite(folder+'/img_'+str(count)+'.png', cropped)
+                cv.imwrite('../collecting_dataset_py/'+folder+'/img_'+str(time)+str(count)+'.png', cropped)
                 count=count+1
                 
 
